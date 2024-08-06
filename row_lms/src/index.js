@@ -32,11 +32,11 @@ const router = createBrowserRouter([
     element:<Addcourse/>
   },
   {
-    path:"addslider",
+    path:"addslider/:_id?",
     element:<Addslider/>
   },
   {
-    path:"addvideo",
+    path:"addvideo/:_id?",
     element:<Addvideo/>
   },
   {

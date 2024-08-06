@@ -1,10 +1,7 @@
 const mongoose = require('mongoose');
 
 const videoSchema = new mongoose.Schema({
-    coursecat:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'courses'
-    },
+    videoname:String,
     videotopic:String,
     videourl:String,
     status:{
@@ -16,10 +13,11 @@ const videoSchema = new mongoose.Schema({
         default:Date.now
     },
     updated_at:{
-        type:Date,
-        }
+        type:Date,  
+    }
 });
-
-const Video = mongoose.model('videos', videoSchema);
+const Video = mongoose.model('videos',videoSchema);
 
 module.exports = Video;
+
+

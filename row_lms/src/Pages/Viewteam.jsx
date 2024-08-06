@@ -75,7 +75,7 @@ function Viewteam() {
       console.log(response);
       if (response.status !== 200) return alert('Something went wrong');
 
-      alert('Course deleted successfully');
+      alert('Team deleted successfully');
       handleFetchTeam();
     }
     catch (error) {

@@ -4,11 +4,13 @@ const{addTeam,
      readTeam, 
      changeTrueStatus,
      readSingleTeam,
-     updateTeam
+     updateTeam,
+     deleteSingleTeam,
+     deleteMultipleTeam,
     } = require('../../controllers/controllers');
 const teamMulter = require('../../middelwares/team/teamMulter');
-const deleteSingleTeam = require('../../controllers/team/deleteSingleTeam');
-const deleteMultipleTeam = require('../../controllers/team/deleteMultipleTeam');
+
+
 
 
 

@@ -14,6 +14,12 @@ function Viewcourse() {
   const [courseData, setCourseData] = useState([]);
   const [filePath, setFilePath] = useState('');
   const [checked, setChecked] = useState([]);
+  const [pageNo, SetPageNo] = useState('1');
+  const [pagewiseData, SetPageWiseData] = useState([]);
+  const [TotalBTN, SetTotalBTN] = useState(null);
+  const [allbtns, SetAllbtns] = useState([]);
+  const [adminData, setAdminData] = useState('');
+
 
   const handleFetchCourse = async () => {
     try {
@@ -25,6 +31,12 @@ function Viewcourse() {
       setFilePath(response.data.filePath);
 
       setCourseData(response.data.data);
+
+      // below process for pagination//
+      const totalbtn = Math.ceil(response.data.data.length / 10);
+      // console.log(totalbtn);
+      // console.log(response.data.data);
+      SetTotalBTN(totalbtn);
 
     } catch (error) {
       console.log(error);
@@ -111,6 +123,45 @@ function Viewcourse() {
     }
       
     };
+    const handleSearch = async (e) => {
+      if (!e.target.value) return handleFetchCourse();
+      try {
+        const response = await axios.get(`http://localhost:5200/course/search_courses/${e.target.value}`);
+        if (response.status !== 200) return alert('Something went Wrong');
+  
+        setCourseData(response.data.data);
+  
+      } catch (error) {
+        console.log(error);
+        alert('Something went Wrong');
+  
+      }
+  
+    };
+
+    useEffect(() => {
+      const pagedata = courseData.slice((pageNo - 1) * 10, ((pageNo - 1) + 10));
+      SetPageWiseData(pagedata);
+    }, [pageNo, courseData]);
+    // console.log(pagewiseData)
+  
+    useEffect(() => {
+      const pagedata = [];
+  
+     
+  
+      for (let i = 1; i <= TotalBTN; i++) {
+        if (i > pageNo - 6 && i < pageNo + 6) {
+  
+          pagedata.push(<button value={i} className={`p-[10px_20px] mx-[6px] text-white ${(i === pageNo) ? 'bg-[darkblue]' : 'bg-[lightblue]'}`} onClick={(e) => { SetPageNo(Number(e.target.value)) }}>{i}</button>);
+        }
+       
+  
+      };
+      SetAllbtns(pagedata);
+    }, [TotalBTN, pageNo]);
+  
+    let SrNo = (pageNo * 10) - 9;
 
   return (
     <div>
@@ -125,6 +176,7 @@ function Viewcourse() {
           <h1 className='text-[25px] font-[500] mb-[10px]'>
             Course Table
           </h1>
+          <input type="text" placeholder="search" className="w-full border border-black p-[10px_20px]"  onChange={handleSearch}/>
           <div className=''>
             <div className='bg-white w-[100%] mb-[50px] p-4 h-full rounded-[20px]'>
               <table >
@@ -176,6 +228,9 @@ function Viewcourse() {
 
               </table>
             </div>
+          </div>
+          <div className='text-center py-[20px]'>
+            {allbtns}
           </div>
           <Footer />
         </div>

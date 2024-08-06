@@ -5,10 +5,11 @@ const { addCourse,
     readSingleCourse,
     updateCourse,
     deleteSingleCourse,
-    trueCourses
+    deleteMultipleCourse,
+    searchCourses,
 } = require('../../controllers/controllers');
 const courseMulterFile = require('../../middelwares/course/courseMulter');
-const deleteMultipleCourse = require('../../controllers/course/deleteMultipleCourse');
+
 
 const courseRoutes = express.Router();
 
@@ -19,6 +20,7 @@ courseRoutes.get('/fetch_course_with_id/:_id', readSingleCourse);
 courseRoutes.put('/update_course/:_id',courseMulterFile, updateCourse);
 courseRoutes.delete('/delete_single_course/:_id', deleteSingleCourse);
 courseRoutes.delete('/multi_delete', deleteMultipleCourse);
-courseRoutes.get('/true_courses', trueCourses);
+courseRoutes.get('/search_courses/:key',searchCourses);
+
 
 module.exports = courseRoutes;
